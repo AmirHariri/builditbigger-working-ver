@@ -8,34 +8,30 @@ import android.os.AsyncTask;
 
 import com.example.android.androidjokelibrary.DisplayJokeActivity;
 
+
+
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.example.backend.myApi.MyApi;
 
-
 import java.io.IOException;
-
 /**
  * Created by Amir on 11/5/2017.
  */
-
 public class JokesEndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
-
     private static MyApi myApiService = null;
     private Context context;
-
     private Activity activity;
-
     public JokesEndpointsAsyncTask(Activity a) {
         activity = a;
     }
-
     @Override
     protected String doInBackground(Pair<Context, String>... params) {
         if(myApiService == null) {  // Only do this once
-            MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
+
+           MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
                     // options for running against local devappserver
                     // - 10.0.2.2 is localhost's IP address in Android emulator
@@ -47,7 +43,17 @@ public class JokesEndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Vo
                             abstractGoogleClientRequest.setDisableGZipContent(true);
                         }
                     });
-            // end options for devappserver
+            // end options for devappserver*/
+/*
+            MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
+                    new AndroidJsonFactory(), null)
+                    .setRootUrl("https://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx /")
+                    .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                        @Override
+                        public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                            abstractGoogleClientRequest.setDisableGZipContent(true);
+                        }
+                    });*/
 
             myApiService = builder.build();
         }
@@ -56,8 +62,14 @@ public class JokesEndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Vo
         String name = params[0].second;
 
         try {
-            return myApiService.sayHi(name).execute().getData();
+
+            // return myApiService.sayHi("test").execute().getData();
+            return myApiService.getJoke().execute().getData();
+
         } catch (IOException e) {
+            return e.getMessage();
+        }
+        catch (Exception e){
             return e.getMessage();
         }
     }

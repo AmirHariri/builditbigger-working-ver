@@ -26,6 +26,6 @@ public class MyBean {
     public String getJoke(){
         Random rand = new Random();
         int  jokeNumber = rand.nextInt(3);
-        return jokes.tellAjoke(jokeNumber);
+        return jokes.tellAJoke(jokeNumber);
     }
 }

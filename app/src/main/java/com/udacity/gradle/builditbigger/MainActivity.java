@@ -1,16 +1,14 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.TellJoke;
-import com.example.android.androidjokelibrary.DisplayJokeActivity;
-
-import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,13 +45,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
+        new JokesEndpointsAsyncTask(this).execute(new Pair<Context, String>(this, "DummyText"));
+
+        /*
         Random rand = new Random();
         int  jokeNumber = rand.nextInt(3);
         joke = new TellJoke();
-        newJoke = joke.tellAjoke(jokeNumber);
+        newJoke = joke.tellAJoke(jokeNumber);
         Intent telljokeIntent = new Intent(this, DisplayJokeActivity.class);
         telljokeIntent.putExtra("JOKE",newJoke);
-        startActivity(telljokeIntent);
+        startActivity(telljokeIntent);*/
 
         //Toast.makeText(this, newJoke, Toast.LENGTH_SHORT).show();
     }
